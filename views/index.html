@@ -1,0 +1,86 @@
+ <!DOCTYPE html>
+ <html>
+ <head>
+     <meta charset="utf-8" />
+     <title>인증서 발급 관리 시스템</title>
+     <link rel="stylesheet" type="text/css" href="css/document-registry.css" />
+     <script src="js/jquery-3.1.1.min.js"></script>
+     <script src="js/sha256.min.js"></script>
+     <script src="https://unpkg.com/@metamask/legacy-web3@latest/dist/metamask.web3.min.js"></script>
+     <script src="js/cert.js"></script>
+ </head>
+ 
+ <body>
+     <header id="menu">
+         <a href="#" id="linkHome">Home</a>
+         <a href="#" id="linkSubmitDocument">인증서 등록</a>
+         <a href="#" id="linkVerifyDocument">인증서 검증</a>
+     </header>
+ 
+     <main>
+         <section id="loadingBox">Loading ...</section>
+ 
+         <section id="infoBox"><header>x</header><p>Info</p></section>
+ 
+         <section id="errorBox"><header>x</header><p>Error</p></section>
+ 
+       
+ 
+         <section id="viewHome">
+             <h1>Certificate DApp with MetaMask</h1>
+             Welcome to the "Report DApp with MetaMask" DApp. This
+             decentralized app runs on the Etherereum blockchain network and
+             holds a registry of items in a Solidity smart contract.
+             <ul>
+                 <li>인증서를 관리할 수 있습니다.</li>
+                 <li><b>사용자는</b> 인증서를 등록할 수 있습니다.</li>
+                 <li>
+                     Contract <b>address</b> (at Ropsten testnet):
+                     <a href="#" id="contractLink" target="_blank"></a>
+                 </li>
+             </ul>
+         </section>
+ 
+         <section id="viewSubmitDocument">
+             <h1>신규 인증서 발급</h1>
+             <p>인증서를 발급합니다. 사용자의 이름과 생년월일을 입력해주세요.</p>
+ 
+                 <label>이름:
+                     <input type="text" id="usname" name="usname" value="" placeholder="What is ..">
+                 </label>
+                 <br>
+                 <label>생년월일:
+                     <input type="text" id="usbirth" name="usbirth" value="" placeholder="0000-00-00 ...">
+                 </label>
+                 <br>
+                 <label>제출:
+                     <input type="button" id="itemUploadButton" value="submit">
+                 </label>
+ 
+                 <br>
+                 <br>
+                 <br>
+ 
+                 <div>
+                     <input type="button" id="showTableButton" value="List Show" />
+                 </div>
+                 <br>
+ 
+                
+                 <div id="myTable"></div>
+ 
+                
+             
+         </section>
+ 
+         <section id="viewVerifyDocument">
+             <h1>Verify a Document</h1>
+             <p>Blockchain users can verify documents by checking whether they exist in the "Document Registry" smart contract on the Ethereum blockchain decentralized network.</p>
+             <!-- <input type="file" id="documentToVerify" /><br/> -->
+             <input type="button" id="documentVerifyButton" value="Submit" />
+         </section>
+     </main>
+     
+     <footer><a href="https://github.com/sotolab/nodeRopstenMetamskDocumentRegistry">Certificate Registry</a></footer>
+ </body>
+ </html>
