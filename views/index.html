@@ -1,86 +1,98 @@
- <!DOCTYPE html>
- <html>
- <head>
-     <meta charset="utf-8" />
-     <title>인증서 발급 관리 시스템</title>
-     <link rel="stylesheet" type="text/css" href="css/document-registry.css" />
-     <script src="js/jquery-3.1.1.min.js"></script>
-     <script src="js/sha256.min.js"></script>
-     <script src="https://unpkg.com/@metamask/legacy-web3@latest/dist/metamask.web3.min.js"></script>
-     <script src="js/cert.js"></script>
- </head>
- 
- <body>
-     <header id="menu">
-         <a href="#" id="linkHome">Home</a>
-         <a href="#" id="linkSubmitDocument">인증서 등록</a>
-         <a href="#" id="linkVerifyDocument">인증서 검증</a>
-     </header>
- 
-     <main>
-         <section id="loadingBox">Loading ...</section>
- 
-         <section id="infoBox"><header>x</header><p>Info</p></section>
- 
-         <section id="errorBox"><header>x</header><p>Error</p></section>
- 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>인증서 발급 관리 시스템</title>
+    <link rel="stylesheet" type="text/css" href="css/document-registry.css" />
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/sha256.min.js"></script>
+    <script src="https://unpkg.com/@metamask/legacy-web3@latest/dist/metamask.web3.min.js"></script>
+    <script src="js/cert.js"></script>
+</head>
+  
+  <style> input[type=text]{
+  border: 1px solid #9caec7;
+  height: 30px;
+  width:250px;
+  font-size:18px;
+  text-align:left;
+  color:#696969;
+    }
+  </style>
+
+<body style ="background-color: #FFFFFF">
+    <div class="container">
+    <header id="menu">
+        <h2> SPEC-A</h2>
+        <nav>
+            <ul>
+                <li><a href="#" id="linkHome"><b>Home</b></a> </li>
+                <li><a href="#" id="linkSubmitDocument"><b>인증서 등록</b></a></li>
+                <li><a href="#" id="linkVerifyDocument"><b>인증서 검증  &nbsp; &nbsp; &nbsp; </b></a></li>
+            </ul>
+        </nav>
+    </header>
+
+<main>
+    <section id="loadingBox">Loading ...</section>
+
+    <section id="infoBox"><header>x</header><p>Info</p></section>
+
+    <section id="errorBox"><header>x</header><p>Error</p></section>
        
- 
-         <section id="viewHome">
-             <h1>Certificate DApp with MetaMask</h1>
-             Welcome to the "Report DApp with MetaMask" DApp. This
-             decentralized app runs on the Etherereum blockchain network and
-             holds a registry of items in a Solidity smart contract.
-             <ul>
-                 <li>인증서를 관리할 수 있습니다.</li>
-                 <li><b>사용자는</b> 인증서를 등록할 수 있습니다.</li>
-                 <li>
-                     Contract <b>address</b> (at Ropsten testnet):
-                     <a href="#" id="contractLink" target="_blank"></a>
-                 </li>
-             </ul>
-         </section>
- 
-         <section id="viewSubmitDocument">
-             <h1>신규 인증서 발급</h1>
-             <p>인증서를 발급합니다. 사용자의 이름과 생년월일을 입력해주세요.</p>
- 
-                 <label>이름:
-                     <input type="text" id="usname" name="usname" value="" placeholder="What is ..">
-                 </label>
-                 <br>
-                 <label>생년월일:
-                     <input type="text" id="usbirth" name="usbirth" value="" placeholder="0000-00-00 ...">
-                 </label>
-                 <br>
-                 <label>제출:
-                     <input type="button" id="itemUploadButton" value="submit">
-                 </label>
- 
-                 <br>
-                 <br>
-                 <br>
- 
-                 <div>
-                     <input type="button" id="showTableButton" value="List Show" />
-                 </div>
-                 <br>
- 
+        <section id="viewHome">
+            <h2>Certificate DApp with MetaMask</h2>
+           <p class="cert_exam"> Welcome to the Report DApp with MetaMask DApp. <br> This
+            decentralized app runs on the Etherereum blockchain network and
+            holds a registry of items in a Solidity smart contract.</p>
+            <ul>
+                <li>인증서를 관리할 수 있습니다.</li>
+                <li><b>사용자는</b> 인증서를 등록할 수 있습니다.</li>
+                <li>
+                    <b> Contract address</b> (at Ropsten testnet):
+                    <a href="#" id="contractLink" target="_blank"></a>
+                </li>
+            </ul>
+            
+            <button class="btn cert_exam"> 인증서 미리보기</button>
+           
+        </section>
+       
+
+        <section id="viewSubmitDocument">
+          <h4> SPEC-A Certificate System </h4>
+            <h3>신규 인증서 발급</h3>
+          
+            <p>인증서를 발급합니다. <br> 사용자의 이름과 생년월일을 입력해주세요.</p>
+            <form>
+                <label for="usname" class="title">이름 </label>
+                    <input type="text" id="usname" name="usname" value="" placeholder="Name ..">
+            
+                <br>
+                <label for="usbirth" class="title">생년월일</label>
+                    <input type="text" id="usbirth" name="usbirth" value="" placeholder="00001234 ...">
                 
-                 <div id="myTable"></div>
- 
-                
-             
-         </section>
- 
-         <section id="viewVerifyDocument">
-             <h1>Verify a Document</h1>
-             <p>Blockchain users can verify documents by checking whether they exist in the "Document Registry" smart contract on the Ethereum blockchain decentralized network.</p>
-             <!-- <input type="file" id="documentToVerify" /><br/> -->
-             <input type="button" id="documentVerifyButton" value="Submit" />
-         </section>
-     </main>
-     
-     <footer><a href="https://github.com/sotolab/nodeRopstenMetamskDocumentRegistry">Certificate Registry</a></footer>
- </body>
- </html>
+                <br><br><br><br>               
+                    <input type="button" style="margin-align:-7px" id="itemUploadButton" value="Submit">
+                    <input type="button" id="showTableButton" value="List Show" />
+                   <input type="button" id="deletecertButton" value="Revoke" />
+              
+               </form>
+                <br>
+               
+                <div id="myTable"></div>
+
+        </section>
+
+        <section id="viewVerifyDocument">
+            <h1>Verify a Document</h1>
+            <p>Blockchain users can verify documents by checking whether they exist in the "Document Registry" smart contract on the Ethereum blockchain decentralized network.</p>
+            <!-- <input type="file" id="documentToVerify" /><br/> -->
+            <input type="button" id="documentVerifyButton" value="Submit" />
+        </section>
+ </div>
+    </main>
+    
+    <footer><a href="https://github.com/kimsol1126/Certificate_register_Metamask">Certificate Registry</a></footer>
+</body>s
+</html>

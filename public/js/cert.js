@@ -1,8 +1,10 @@
 const { web3 } = window
 const selectedAddress = web3.eth.defaultAccount  //1~2 현재 엑티브되어있는 메타마스크 계정을 가지고 온다
 
+console.log("selectedAddress: " +selectedAddress); //연결된 계정 확인 로그
+
 $(document).ready(function() {
-    const productRegistryContractAddress = '0xd3683711ff7fBF2e341c0d02A4B0fD255CE2bD21'; //스마트컨트랙트 주소
+    const productRegistryContractAddress = '0x6A67AdFE55089CaBA0daB9540fBcDc07590074B1'; //스마트컨트랙트 주소
     const productRegistryContractABI = //스마트컨트랙트 ABI 코드
     [
       {
@@ -165,6 +167,11 @@ $(document).ready(function() {
             "internalType": "bytes32",
             "name": "",
             "type": "bytes32"
+          },
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
           }
         ],
         "stateMutability": "view",
@@ -257,10 +264,11 @@ $(document).ready(function() {
 
 
     $('#linkHome').click(function() { showView("viewHome") });
-    $('#linkSubmitDocument').click(function() { showView("viewSubmitDocument"); showTable();  });
+    $('#linkSubmitDocument').click(function() { showView("viewSubmitDocument"); });
     $('#linkVerifyDocument').click(function() { showView("viewVerifyDocument") });
     $('#itemUploadButton').click(itemUploadButton);
     $('#showTableButton').click(showTable);
+    $('#deletecertButton').click(deletecertButton);
 
 	
     $('#contractLink').text(productRegistryContractAddress);
@@ -294,16 +302,15 @@ $(document).ready(function() {
 
 		if (window.ethereum)
 			try {
-				await window.ethereum.enable();
-			} catch (err) {
+			//	await window.ethereum.enable();
+			const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+      } catch (err) {
                 return showError("Access to your Ethereum account rejected.");
 			}
 		if (typeof web3 === 'undefined')
                 return showError("Please install MetaMask to access the Ethereum Web3 injected API from your Web browser.");
 		
-
 		let contract = web3.eth.contract(productRegistryContractABI).at(productRegistryContractAddress);
-
 
 		$('#myTable').append(  '<table>' );
 
@@ -324,7 +331,7 @@ $(document).ready(function() {
 			console.log("notAfter: " + notAfter);
 			console.log("notAfter: " + strArray[4]*1000);
       console.log("ID: " + strArray[5]);
-      $('myTable').append('<tr><td>' + strArray[0] + ", "+ strArray[1] + ", "+ strArray[2] + ", "+ notBefore + notAfter + strArray[5] + '</td></tr>' );
+      $('#myTable').append('<tr><td>' + strArray[0] + ", "+ strArray[1] + ", "+ strArray[2] + ", "+ notBefore + notAfter + strArray[5] + '</td></tr>' );
 
 			// 		// let row = table.insertRow();
 			// 		// let cell1 = row.insertCell(0);
@@ -375,16 +382,33 @@ $(document).ready(function() {
 		}); 
 		
     }
+    async function deletecertButton(){
+      if (window.ethereum)
+			try {
+				await window.ethereum.enable(); //메타마스크와 연결되어있는가
+			} catch (err) {
+                return showError("Access to your Ethereum account rejected.");
+			}
+		  if (typeof web3 === 'undefined')
+                return showError("Please install MetaMask to access the Ethereum Web3 injected API from your Web browser.");
+		
+      let account = selectedAddress 
+      console.log("my account " , account);
+      let contract = web3.eth.contract(productRegistryContractABI).at(productRegistryContractAddress);
+
+      contract.deleteCert(function(err, result){
+        if (err)
+				return showError("Smart contract call failed: " + err);
+        showInfo(`Document ${result} <b>successfully revoked</b> to the registry.`);
+      });
+    	
+    }
 
     function verifyDocument() {
 		
 		
 		if (typeof web3 === 'undefined')
                 return showError("Please install MetaMask to access the Ethereum Web3 injected API from your Web browser.");
-			
-		let account = selectedAddress 
-		console.log("my account " , account);
-		
 
  
     }
